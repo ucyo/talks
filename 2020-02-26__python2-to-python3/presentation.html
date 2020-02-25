@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Python 2 to 3</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Merriweather:400);
+      @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Roboto:400,700,400italic);
+    </style>
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: center, middle
+
+
+# Transform Python 2 to 3 & Mattermost
+## Python Meeting 2020/02/26
+
+---
+
+# Python 2 to 3
+
+1. What has changed?
+  1. Easy changes
+  2. Difficult changes
+  3. Extra features
+2. How to fix applications using `2to3`
+3. Recommendation
+
+# Mattermost
+
+1. How to login
+2. How to use
+
+---
+
+# What changed (easy to catch changes)?
+
+- The syntax (e.g. `print x` to `print(x)`) of some of the commands have changed
+
+
+Examples
+- `assert` statements
+- `.sort()` vs `sorted()`
+- `raw_input`, `input`, `next`, `print`, `raise`, `except`
+- `xrange()` vs `range()`
+- String formatting: `"%d %s" % (i,s)` vs. `"{} {}".format(i,s)`
+
+For details look @ https://docs.python.org/2/library/2to3.html#to3-fixers
+and https://www.digitalocean.com/community/tutorials/how-to-port-python-2-code-to-python-3
+
+---
+
+# What changed (more difficult changes)?
+
+- Some of the inner workings have changed and these are harder to catch.
+- It is recommended to test these functions if they still operate as expected.
+
+Examples:
+- `dict`
+- `import`, `imports`, `imports2`
+- `itertools`
+- `map()`
+
+---
+
+class: center, middle
+
+# Differences in Python 2 vs Python 3
+
+---
+
+
+# Differences in Python 2 and Python 3
+
+String types are no longer ASCII, but UNICODE
+
+.left-column[
+  ## Python 2
+  ```python
+s = "Hello, Python IMK"
+  ```
+  - Only 255 characters
+  - Mostly latin chars
+  - Implicit transformation
+]
+
+.right-column[
+  ## Python 3
+  ```python
+s = "你好 Python IMK"
+  ```
+  - 128.000 characters
+  - International character set
+  - `bytes.decode()` -> `str` <br> (to Unicode)
+  - `str.encode()` -> `bytes` <br> (to 8 bit string)
+  - No implicit transformation
+]
+
+---
+
+
+# Differences in Python 2 and Python 3
+
+No implicit comparisons
+
+.left-column[
+  ## Python 2
+
+  ```python
+max('test', 2) = 'test' 
+'test' > 124   = True 
+None > 232     = False
+  ```
+  - WTF?
+]
+--
+.right-column[
+  ## Python 3
+  ```python
+max('test', 2) = TypeError!
+'test' > 232   = TypeError!
+None > 232     = TypeError!
+  ```
+  - Puuh... 
+]
+
+---
+
+# Differences in Python 2 and Python 3
+The division operation has changed.
+.left-column[
+  ## Python 2
+  `2 / 4 = 0` <br>  you know what you do
+]
+--
+.right-column[
+  ## Python 3
+  `2 / 4 = 0.5` <br> anticipates human mistakes
+  <br><br>`2 // 4 = 0` <br> alternative operation
+]
+
+---
+
+class: center, middle
+
+# Python 3: Type Annotations
+
+Decorator examples are from: https://code.tutsplus.com/tutorials/python-3-function-annotations--cms-25689
+---
+
+# Additional feature in Python 3: Type annotations
+
+```python
+def func(string: str, start: 'int', end: 'int') -> str:
+    return string[start:end]
+
+a = func("1234567", 0, 4)
+b = func([1,2,3,4,5,6,7], 0, 4)
+```
+--
+Currently these annotations are ignored by the interpreter.
+They are saved as arguments in the object, but not interpreted.
+
+```python
+a = "1234"
+b = [1,2,3,4]
+```
+---
+
+# Type annotation (external checks)
+
+But there might be tools using these:
+```bash
+$ > python3 -m pip install -U mypy
+```
+
+These will check the annotations and print an error if misused
+
+```bash
+$ > mypy script.py
+py3.py:9: error: Argument 1 to "func" has incompatible 
+type "List[int]"; expected "str"
+```
+
+---
+
+# Type annotations can be anything
+
+They can be used to inform the user...
+```python
+def div(a: 'divident', b: 'divisor (not 0)') -> float:
+  return a/b
+```
+--
+...with different information
+```python
+def div(a: dict(type=int, help='divident'), 
+        b: dict(type=int, help='divisor (not 0)')) -> float:
+  return a/b
+```
+--
+The annotations are saved to the function and not interpreted
+```python
+>>> div.__annotations__
+{'a': 'divident', 'b': 'divisor (not 0)', 'return': <class 'float'>}
+```
+
+---
+
+# Unless we force it to
+
+```python
+def check_range(f):
+    def decorated(*args, **kwargs):
+        for name, range in f.__annotations__.items():
+            min_value, max_value = range
+            if not (min_value <= kwargs[name] <= max_value):
+                msg = 'argument {} is out of range [{} - {}]'
+                raise ValueError(msg.format(name, min_value, max_value))
+        return f(*args, **kwargs)
+    return decorated
+
+@check_range
+def foo(a: (0, 8), b: (5, 9), c: (10, 20)):
+    return a * b - c
+```
+--
+```python
+>>> foo(a=3,b=6,c=199)
+ValueError: argument c is out of range [10 - 20]
+```
+
+---
+
+# Now type checks work
+
+```python
+def check_type(f):
+    def decorated(*args, **kwargs):
+        for name, t in f.__annotations__.items():
+            if not isinstance(t, dict):
+                t = dict(type=t)
+            if not isinstance(kwargs[name], t['type']):
+                msg = 'Expected argument {} of type {}, got {}'
+                raise TypeError(msg.format(name, t['type'], type(kwargs[name])))
+        return f(*args, **kwargs)
+    return decorated
+
+@check_type
+def barrio(a: dict(type=int, help='divident'), 
+           b: dict(type=int, help='divisor (better not be 0)')):
+    return a/b
+```
+--
+```python
+>>> barrio(a=3.4, b=2)
+TypeError: Expected argument a of type <class 'int'>, got <class 'float'>
+```
+
+
+---
+
+class: center, middle
+
+# Lets fix it using `2to3`
+
+
+---
+# `2to3` usage
+
+Information
+```bash
+2to3 -l                    # Show fixers
+```
+--
+Changes
+```bash
+2to3 py2.py                # Print changes (do not write)
+2to3 -w py2.py             # Write changes (w/ backup to <filename>.py.bak)
+2to3 -n -w py2.py          # Write changes (w/o backup)
+2to3 -wno trans py2.py     # Write changes (write to trans/<filename>.py)
+2to3 -Wno trans py2.py     # Write whole source (write to trans/<filename>.py)
+```
+--
+Only specific changes
+```bash
+2to3 -f print -f imports py2.py  # Apply only fixer 'print' and 'imports'
+2to3 -x asserts py2.py           # Apply all(!) fixers, except fixer 'asserts'
+```
+---
+
+# Non-trivial fixes
+
+From the [doc](https://docs.python.org/2/library/2to3.html#to3-fixers): 
+*"Sometimes 2to3 will find [..] code that needs to be changed, but 2to3 cannot fix automatically. [Here] 2to3 will print a warning beneath the diff [..]"*
+
+These can be tested using
+
+```bash
+python2.7 -3 py2.py
+```
+
+---
+
+# Recommended usage for `2to3`
+
+
+Situation:
+```bash
+$ > tree Developments
+Developments
+└── application
+    ├── application
+    │   ├── app.py
+    │   └── __init__.py
+    ├── README.md
+    └── setup.py
+```
+--
+Recommendation
+```bash
+2to3 -Wno Developments/<codefolder>-py3 Developments/<codefolder>-py3
+```
+--
+- No code changes on the actual source
+- 1-to-1 copy of original codebase (incl. non-touched files) 
+
+---
+
+# Recommended usage for `2to3`
+
+New Situation:
+```bash
+$ > tree Developments
+Developments
+├── application
+│   ├── application
+│   │   ├── app.py
+│   │   └── __init__.py
+│   ├── README.md
+│   └── setup.py
+└── application-py3        # output folder
+    ├── application
+    │   ├── app.py         # new code
+    │   └── __init__.py    # old code
+    └── setup.py
+```
+
+---
+
+class: center, middle
+
+# Mattermost
+
+---
+
+# Mattermost
+
+Login to www.chat.eudat.eu
+
+.center[<img src="01.png" width=500>]
+
+
+---
+
+# Mattermost
+
+Choose *B2ACCESS*
+
+.center[<img src="02.png" width=800>]
+
+
+---
+
+# Mattermost
+
+Search for *KIT* and login with your credentials
+
+.center[<img src="03.png" width=800>]
+
+
+---
+
+class: center, middle
+background-image: url(Thats_all_folks.svg)
+background-size: cover
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({
+        ratio: '4:3',
+        highlightStyle: 'dracula',
+        highlightLines: true,
+      });
+    </script>
+  </body>
+</html>
+

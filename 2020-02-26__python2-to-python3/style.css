@@ -1,0 +1,45 @@
+.left-column {
+  width: 45%;
+  float: left;
+  margin-right: 10px;
+}
+.right-column {
+  width: 48%;
+  float: right;
+}
+
+body { font-family: 'Montserrat'; }
+h1, h2, h3 {
+  font-family: 'Roboto';
+  font-weight: normal;
+}
+.remark-slide-content h1 {
+  font-size: 40px;
+}
+.remark-slide-content h2 {
+  font-size: 30px;
+}
+.remark-slide-content {
+  font-size: 23px;
+}
+table, td, th {
+  border: 1px solid black;
+}
+td {
+  padding: 10px;
+}
+
+.remark-code, .remark-inline-code { font-family: 'cyo'; }
+.remark-inline-code {
+  background: lightgray;
+  padding-left: 5pt;
+  margin-bottom: 5pt;
+  margin-top: 5pt;
+  padding-right: 5pt;
+  border-radius: 5px;
+}
+.remark-code {
+  border-radius: 15px;
+  font-size: 21px;
+}
+
