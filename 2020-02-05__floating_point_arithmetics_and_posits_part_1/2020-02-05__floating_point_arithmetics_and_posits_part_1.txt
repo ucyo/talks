@@ -1,0 +1,207 @@
+www.kit.edu
+KIT - The Research University in the Helmholtz Association
+STEINBUCH CENTRE FOR COMPUTING (SCC) &INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+Floating Point Arithmetics + Posits (Part 1)
+by Uğur Çayoğlu											   05. February 2020
+
+Agenda
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+2
+4th PhD Progress Meeting
+Floating Point Arithmetics (Part 1)
+Posits (Part 2)
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+3
+Take-home message of today!
+The correct answer is not of interest
+Accept life and get over it!
+“If life gives you lemons, …”
+Be consistent and repeat mistakes!
+Repeat mistakes within one build, across multiple builds, and across multiple platforms
+Ugur Cayoglu
+0.1 + 0.2 != 0.3
+Source_1
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+4
+Sign (1) + Exponent (8) + Mantissa (23) = IEEE Floating-Point Data (32)
+Sign 		= Negative/Positive
+Exponent 	= Power of two
+Mantissa	= Fraction 			(1/2^23 = 1/8,388,608 = eps)
+x = (-1)^s * 2^(exp-127) * (1+f)
+Structure and Format of Floating-Point Data
+Ugur Cayoglu
+Source_2
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+5
+Some Weird Properties of Floating-Point Data
+There are some special values (i.e. denormals):
++infinite, -infinite, 
++zero, -zero, 
+NaN (there are actually 16,777,216 NaN values (2 * mantissa))
+Ugur Cayoglu
+Source_2
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+6
+Guarantees while using Floating-Point Arithmetics
+These operations are determined and will produce reproducible results…
+Addition
+Subtraction
+Division
+Multiplication
+Square root computation
+Ugur Cayoglu
+… if we use the same rounding mode, same inputs, same global settings and same destination precision
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+7
+Rounding modes
+Composition
+Per processor code
+Precision modes
+Denormals
+Compiler differences / uninitialised data / transcendentals / square root estimates / conversions
+A Set of Problems Ordered by Your Likelihood of Experiencing it 
+Ugur Cayoglu
+Please check the trusted documentation of your programming language and compiler of choice for possibilities to prevent these problems
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+8
+Check your algorithms and data structures before you blame floating point arithmetics about missing determinism
+Please check your code before you blame floating point arithmetics… 
+Ugur Cayoglu
+Source_3
+Random number generator working properly?
+Flexible timing with thread scheduling?
+Simulation time variable?
+Code with undefined behaviour?
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+9
+Five Rounding modes
+Ugur Cayoglu
+11.5
+12.5
+- 11.5
+- 12.5
+TO_NEAREST_EVEN
+12
+12
+-12
+-12
+TO_NEAREST_AWAY_ZERO
+12
+13
+-12
+-13
+TOWARD_ZERO
+11
+12
+-11
+-12
+PLUS_INFINITY
+12
+13
+-11
+-12
+MINUS_INFINITY
+11
+12
+-12
+-13
+Rounding mode for values in between two floating point values
+Runtime check necessary
+Thread bound
+C/C++:  #include <fenv.h>
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+10
+Composition
+Optimization error
+Reordering of operations based on register/cache availability
+Throughput vs precision
+Use parenthesis for operation ordering 
+C/C++:  fp/fast vs fp/precise
+Ugur Cayoglu
+a + b + c = ?
+
+a + (b + c) != (a + b) + c
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+11
+Precision Modes
+Different precisions for intermediate representations
+In most common architectures (i.e. Intel, AMD) this is 24-, 53-, 64-bit for representing mantissa
+Depends on the feature set one uses
+C78: Floats are doubles where fraction part is filled with zeros
+C++98: Only if one of the operands is a double
+C99: “Evaluation type may be wider than semantic type”
+… basically it is up to the compiler and the compilation flags used.
+Ugur Cayoglu
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+12
+Per processor code
+Depending on the feature optimizations available the results might differ
+SSE = 32bit intermediate precision
+SSE2 = 64bit intermediate precision
+Special instructions
+i.e. fmadd
+Ugur Cayoglu
+fmadd(a,b,c) = a * b + c
+
+a * b + c * d = ?
+t = c * d
+fmadd(a,b,t) != a * b + c * d
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+13
+Denormals
+Special values from 0 to 1
+x = (-1)^s * 2^(exp-127) * (1+f)
+Smallest possible value is for f = 0, exp = 1 (since exp=0 is +zero)
+2^-126 = 1.175E-38				(realmin)
+2^-126 * 2^-23 = 1.4013e-45	(eps*realmin)
+All values between realmin and eps*realmin are called denormals
+Computations between these values are not hardware supported
+There is a flag to turn calculation of denormals off
+All values below realmin will be set to 0
+Turn off if you want speed up, but results will change (> better don’t)
+Ugur Cayoglu
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+14
+Compiler differences / transcendentals / square root estimates / conversions
+Compile time/Runtime calculations (e.g. sin, tan, cos)
+Compiler: gcc, clang, visual c++, ...
+Square root estimates
+There are square root estimates that are implemented by hardware manufacturers (rcpss, rcpps, rsqrtps, rsqrtss)
+Transcendentals like sin, cos, tan, pi, e can be hardware supported  and might differ based on manufacturer
+Conversions e.g. printing commands might differ in output depending on operation order
+Ugur Cayoglu
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+15
+That’s all folks. Thank you… 
+Ugur Cayoglu
+Source_4
+https://0.30000000000000004.com/ 
+
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+16
+Resources
+Main source for presentation: http://randomascii.wordpress.com  
+What Every Computer Scientist Should Know About Floating-Point Arithmetic https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html 
+Float Converter https://www.h-schmidt.net/FloatConverter/IEEE754.html 
+
+
+
+Pics:
+https://i.imgur.com/SgnwoIn.jpg 
+https://fabiensanglard.net/floating_point_visually_explained/floating_point_window_pi.svg
+https://static.inspiremore.com/wp-content/uploads/2017/01/24092529/Screen-Shot-2017-01-24-at-3.10.33-PM.png
+https://twitter.com/calvinn_hobbes/status/528720685771026432 
+Ugur Cayoglu
