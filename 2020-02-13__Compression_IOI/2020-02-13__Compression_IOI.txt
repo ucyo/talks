@@ -1,0 +1,381 @@
+www.kit.edu
+KIT - The Research University in the Helmholtz Association
+STEINBUCH CENTRE FOR COMPUTING (SCC) &INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+Compression IOI
+by Uğur Çayoğlu											   13. February 2020
+
+Me, myself and I
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+2
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Studied Information Management and Engineering @ KIT
+
+Me, myself and I
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+3
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Studied Information Management and Engineering @ KIT
+Bachelor thesis: 
+Improve Collaboration Between Marketing and Sales and Analyze the Impact on the Quality of Customer Data in the Enterprise
+
+Me, myself and I
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+4
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Master thesis:
+Conceptualization and Prototypical Implementation of a Tool to Determine the Optimal XML Similarity Measurement
+Doctoral thesis:
+Compression Methods for Structured Floating Point Data and their Application in Climate Research
+
+History
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+5
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Compression has its origin in communication technology
+Hence compression == source coding
+Source
+(Unreliable) Channel
+Sink
+
+Compression IOI
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+6
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Source [A]
+
+Compression IOI
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+7
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Source [B]
+
+Compression IOI
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+8
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+
+Compression IOI
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+9
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+
+Compression IOI
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+10
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+
+Compression IOI
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+11
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Lossless compression
+
+Compression IOI
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+12
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Lossy compression
+Source [B]
+
+Nomenclature
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+13
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Original data
+Encoded data
+Decoded data
+
+Nomenclature
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+14
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Original data
+Encoded data
+Decoded data
+Size of encoded data
+Size of original data
+
+Nomenclature
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+15
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Original data
+Encoded data
+Decoded data
+Size of encoded data
+Size of original data
+Size of encoded data
+Size of original data
+Compression Factor
+[no dimension]
+
+Nomenclature
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+16
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Original data
+Encoded data
+Decoded data
+Encoding time
+Decoding time
+
+Nomenclature
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+17
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Original data
+Encoded data
+Decoded data
+Encoding time
+Decoding time
+Encoding time
+Size of original data
+EncodingThroughput
+[Bytes/sec]
+Size of original data
+Decoding time
+DecodingThroughput
+[Bytes/sec]
+Size of encoded data
+Size of encoded data
+
+Nomenclature
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+18
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Original data
+Encoded data
+Decoded data
+Encoding time
+Encoding time
+Size of original data
+EncodingThroughput
+[Bytes/sec]
+Size of original data
+
+Nomenclature
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+19
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Original data
+Encoded data
+Decoded data
+Decoding time
+Decoding time
+DecodingThroughput
+[Bytes/sec]
+Size of encoded data
+Size of encoded data
+
+Nomenclature
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+20
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Original data
+Encoded data
+Decoded data
+Encoding time
+Decoding time
+Size of original data
+Size of encoded data
+Throughput (T)
+[Bytes/sec]
+Compression Factor (CF)
+[no dimension]
+
+Iterative Process
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+21
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+CF
+T
+
+Iterative Process
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+22
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+CF
+T
+CF
+T
+
+Iterative Process
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+23
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Throughput (T)
+[Bytes/sec]
+Compression Factor (CF)
+[no dimension]
+CF
+T
+CF
+T
+
+Timeline
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+24
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Past
+Present
+Future
+Far Future 
+Understanding the information and intrinsic structure of the data
+Compression Factor
+Applied computer science
+Throughput
+Custom scientific field
+Research of data structures and algorithms 
+Custom + related scientific field
+Compression Factor
+AI/ML methods for understanding of interdependencies
+… 
+… 
+Throughput
+
+Timeline
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+25
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Past
+Present
+Future
+Far Future 
+Understanding the information and intrinsic structure of the data
+Compression Factor
+Applied computer science
+Throughput
+Domain knowledge
+Research of data structures and algorithms 
+Custom + related scientific field
+Compression Factor
+AI/ML methods for understanding of interdependencies
+… 
+… 
+Throughput
+
+Timeline
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+26
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Past
+Understanding the information and intrinsic structure of the data
+Compression Factor
+Domain knowledge
+
+Timeline
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+27
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Past
+Present
+Future
+Far Future 
+Understanding the information and intrinsic structure of the data
+Compression Factor
+Applied computer science
+Throughput
+Domain knowledge
+Research of data structures and algorithms 
+Custom + related scientific field
+Compression Factor
+AI/ML methods for understanding of interdependencies
+… 
+… 
+Throughput
+
+Workflow for optimizing throughput or compression factor
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+28
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Pick a target
+Select use case
+Profile
+Benchmark
+Good enough?
+Change code
+Yes
+No
+Source [C]
+
+Profiling and Benchmarkingin this context
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+29
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Profiling: Analysis of the program as a whole (might be split down to function level)
+Benchmarking: Comparison of evolutions/versions of functions
+
+Profiling and Benchmarkingin this context
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+30
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Profiling: Analysis of the program as a whole (might be split down to function level)
+Benchmarking: Comparison of evolutions/versions of functions
+main()
+generate_histogram()
+print_histogram()
+
+Profiling and Benchmarkingin this context
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+31
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Profiling: Analysis of the program as a whole (might be split down to function level)
+Benchmarking: Comparison of evolutions/versions of functions
+generate_histogram()
+fast_histogram()
+instant_histogram()
+
+Profiling and Benchmarkingin this context
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+32
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Profiling: Analysis of the program as a whole (might be split down to function level)
+hyperfine (time)
+valgrind  (time + memory)
+gnu time  (time + memory)
+Definitely worth looking into … 
+flamegraph
+perf
+*not-perf
+*cargo-instruments
+based on [C]
+
+Profiling and Benchmarkingin this context
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+33
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Benchmarking: Comparison of evolutions/versions of functions
+Very specific for each programming language
+No general recommendation possible
+Rust: criterion
+
+Demo time
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+34
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Profile I/O of my laptop
+First generate some random data
+Copy this data from a to b
+Profile different copy commands
+cp
+dd
+rsync
+Applications we will use
+hyperfine (time)
+valgrind  (time + memory)
+gnu time  (time + memory)
+
+That’s all folks
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+35
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+Source [Z]
+
+Sources
+STEINBUCH CENTRE FOR COMPUTING (SCC)INSTITUTE FOR METEOROLOGY AND CLIMATE RESEARCH (IMK-ASF)
+36
+Breakfast Meeting on 2020/02/13 by Ugur Cayoglu
+[Z] Calvin Photoshoot 
+[A] Greece Olympia Marble Statue 
+[B] https://drawingacademy.com/drawing-progress 
+[C] https://fosdem.org/2020/schedule/event/rust_optimizing_rav1e/ 
