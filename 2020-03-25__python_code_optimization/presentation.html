@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Python 2 to 3</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Merriweather:400);
+      @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Roboto:400,700,400italic);
+    </style>
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: center, middle
+
+
+# Python Code Optimization
+## Python Meeting 2020/03/25
+
+---
+
+# Python Code Optimization
+This is a two step program.
+--
+
+## 1. Preprocessing
+1. Understand the problem
+2. Isolate the problem
+3. Identify and generate expected output
+4. Write a test
+  - Install a testing module
+
+--
+
+## 2. Optimization
+5. Optimize code
+    - Eliminate `for`-loops
+6. Parallelisation of code
+  - Using the `concurrent` module
+
+
+--
+
+(Thank you **Lukas** for the example)
+
+---
+# Python Code Optimization
+This is a two step program.
+
+## 1. Preprocessing (**.red[Do not skip!]**)
+1. Understand the problem
+2. Isolate the problem
+3. Identify and generate expected output
+4. Write a test
+  - Install a testing module
+
+## 2. Optimization
+5. Optimize code
+    - Eliminate `for`-loops
+6. Parallelisation of code
+  - Using the `concurrent` module
+
+(Thank you **Lukas** for the example)
+
+---
+
+
+
+# Understand the problem
+
+- .red[Problem] <br> Mapping satellite trajectory data onto a global grid
+- Satellite data is in ASCII format
+
+```sh
+$ > head DataHimawari-201906230600.pyRET
+
+179.532 49.552 0.850 969.000 1233.000
+179.559 49.551 0.850 969.000 1234.000
+179.530 49.534 0.850 970.000 1233.000
+179.558 49.533 0.850 970.000 1234.000
+179.501 49.517 0.850 971.000 1232.000
+179.499 49.499 0.850 972.000 1232.000
+```
+Columns:
+```bash
+lon lat ash <something> <otherthing>
+```
+---
+
+# Understand the problem
+
+- .red[Problem] <br> Mapping satellite trajectory data onto a global grid
+- Grid data (i.e. coordinates) is a `1336 x 2139` csv file
+
+```sh
+$ > head LatsHimawari.dat
+
+60.984 60.994 61.004 61.014 61.024 61.033 61.043 61.053 ..
+61.063 61.073 61.082 61.092 61.102 61.112 61.122 61.131 ..
+61.141 61.151 61.161 61.170 61.180 61.190 61.200 61.209 ..
+61.219 61.229 61.238 61.248 61.258 61.268 61.277 61.287 ..
+61.297 61.306 61.316 61.326 61.335 61.345 61.355 61.364 ..
+   :      :      :      :      :      :      :      :   :
+
+```
+The same is true for Longitude values
+---
+
+# Understand the problem
+
+Original script
+
+```Python
+
+
+import csv, os, glob
+import numpy as np
+import time
+
+
+### SET
+dat    = 'DataHimawari.pyRET'
+londat = 'LonsHimawari.dat'
+latdat = 'LatsHimawari.dat'
+
+### INIT
+# functions
+def read_csv(datfile):
+
+    ds = []
+
+    with open(datfile, newline='') as csvfile:
+        f = csv.reader(csvfile, delimiter=' ',quoting=csv.QUOTE_NONNUMERIC)
+        for row in f:
+            ds.append(row)
+
+    ds = np.array(ds)
+    return ds
+
+
+### LOAD
+glon = read_csv(londat)      # satellite grid lon
+glat = read_csv(latdat)      # satellite grid lat
+
+# transform glon to 0-360°
+glon = (glon + 360) % 360
+
+files  = glob.glob('*.pyRET')
+files.sort()
+nf = len(files)
+
+for i in range(0,nf):
+  f = files[i]
+  ds   = read_csv(f)         # dataset of ash pixels
+
+  day  = f[-12:-10]
+  hour = f[-10:-8]
+
+  # transform data vector onto satellite grid
+  start_t = time.time()
+  gash = np.zeros(glon.shape)
+
+  npix = ds.shape[0]
+  for j in range(0,npix):
+
+    lo = ds[j,0]
+    la = ds[j,1]
+
+    lon_mask = glon == lo
+    lat_mask = glat == la
+
+    gash[lon_mask & lat_mask] = ds[j,2]
+
+  end_t  = time.time()
+  diff_t = end_t - start_t
+
+  ### SAVE variables
+  svar = 'remapped_{}.npz'.format(f[0:-6])
+  np.savez(svar,
+           glon=glon,
+           glat=glat,
+           gash=gash,
+           day=day,
+           hour=hour)
+  print('finished: {} in {:f} sec'.format(f,diff_t))
+
+print('FINISHED!')
+```
+---
+
+# Isolate the problem
+
+Specify a `main` function at the beginning and call it at the bottom.
+
+```Python
+
+import csv, os, glob
+import numpy as np
+import time
+
+def main():
+  dat    = 'DataHimawari.pyRET'
+  londat = 'LonsHimawari.dat'
+  latdat = 'LatsHimawari.dat'
+
+  # snipped code
+
+  print('FINISHED!')
+
+
+def read_csv(datfile):
+    ds = []
+
+    # snipped code
+
+    return ds
+
+if __name__ == '__main__':
+    main()
+
+```
+---
+
+# Identify and generate expected output
+
+Execute the script to generate expected (i.e. correct) output
+
+```Python
+import csv, os, glob
+import numpy as np
+import time
+
+def main():
+
+  # snipped code
+
+* files = glob.glob('*.pyRET')
+  files.sort()
+  nf = len(files)
+
+  for i in range(0,nf):
+    f = files[i]
+
+    # snipped code
+
+*    svar = 'remapped_{}.npz'.format(f[0:-6])
+*    np.savez(svar,
+*            glon=glon,
+*            glat=glat,
+*            gash=gash,
+*            day=day,
+*            hour=hour)
+
+    print('finished: {} in {:f} sec'.format(f,diff_t))
+
+  print('FINISHED!')
+
+if __name__ == '__main__':
+    main()
+
+```
+---
+
+# Identify and generate expected output
+
+Change script to produce new output or rename old files
+
+```Python
+import csv, os, glob
+import numpy as np
+import time
+
+def main():
+
+  # snipped code
+
+  files = glob.glob('*.pyRET')
+  files.sort()
+  nf = len(files)
+
+  for i in range(0,nf):
+    f = files[i]
+
+    # snipped code
+
+*    svar = 'remapped_{}_new.npz'.format(f[0:-6])
+     np.savez(svar,
+             glon=glon,
+             glat=glat,
+             gash=gash,
+             day=day,
+             hour=hour)
+
+    print('finished: {} in {:f} sec'.format(f,diff_t))
+
+  print('FINISHED!')
+
+if __name__ == '__main__':
+    main()
+
+```
+---
+
+# Write a test function
+
+- Compare old output with new output
+- Identify breaking changes immediately
+
+```python
+import csv, os, glob
+import numpy as np
+import time
+
+def read_csv(datfile):
+    # snipped code
+    return ds
+
+def main():
+    # snipped code
+    print('FINISHED!')
+
+def test_new_result():
+    main()  # Needed if tests are run on file change
+    expected = [np.load("./remapped_DataHimawari-201906212000.npz"),
+                np.load("./remapped_DataHimawari-201906230600.npz")]
+    result = [np.load("./remapped_DataHimawari-201906212000_new.npz"),
+              np.load("./remapped_DataHimawari-201906230600_new.npz")]
+
+    for exp,res in zip(expected, result):
+      for key in ["glon", "glat", "gash", "day", "hour"]:
+        assert np.allclose(exp[key].astype(float), res[key].astype(float))
+
+if __name__ == '__main__':
+    main()
+```
+---
+
+# Install a testing module
+
+- Testing modules .green[help the developer] make code changes with
+.red[immediate warnings] if function output is **different then expected**
+- Tests can be executed manually or on code change.
+- There are several modules, but the major ones are `unittest` and `pytest`
+- We go on with `pytest`
+
+--
+
+```sh
+$ > python -m pip install pytest pytest-cov pytest-xdist
+```
+
+--
+All functions starting with `test_` are assumed to be tests by `pytest`.
+```python
+def test_something_important():
+
+  # snipped code
+
+  assert np.allclose(result,expected), "Arrays not equal!!"
+```
+
+--
+
+```sh
+$ > pytest script.py --looponfail --color=yes
+```
+---
+
+# Optimize code
+
+- Preprocessing is done at this step
+- Now parts of the code can be exchanged and we can be sure to be notified
+if we made an error i.e. `read_csv()`
+
+```python
+def read_csv(datfile):
+    ds = []
+
+    with open(datfile, newline='') as csvfile:
+        f = csv.reader(csvfile, delimiter=' ',quoting=csv.QUOTE_NONNUMERIC)
+        for row in f:
+            ds.append(row)
+
+    ds = np.array(ds)
+    return ds
+```
+```Python
+def read_csv(datfile):
+    return pd.read_csv(datfile, dtype=float, sep=" ", header=None)
+```
+
+--
+
+```python
+glat = read_csv(latdat)
+pd_glat = pd.read_csv(latdat, dtype=float, sep=" ", header=None)
+
+np.all_close(glat.values, pd_glat.values)  # False
+```
+
+
+---
+
+# Optimize code
+
+- In this particular case `df.isin()` did most of the heavy lifting
+
+```Python
+result = pd.DataFrame({"lon":glon.flat, "lat":glat.flat})  # Global grid
+df = pd.DataFrame(read_csv(f));  # Satellite data
+df.columns = ["lon", "lat", "ash","something","otherthing"]
+
+# select all longitude datapoints in df, which are also in result longitude
+crit1 = df.lon.isin(result.lon)
+
+# select all latitude datapoints in df, which are also in result latitude
+crit2 = df[crit1].lat.isin(result.lat)
+
+# interesting points
+df[crit1 & crit2]
+```
+
+- Performance boost: No `for` loops
+- `crit2` operates on results of `crit1`: reduced search space
+
+---
+
+# Parallelisation of code
+
+Ideal code for parallelisation since the script is executed per file
+
+```python
+def main():
+  ### SET
+  # data
+  #datdir = ''
+  dat    = 'DataHimawari.pyRET'
+  londat = 'LonsHimawari.dat'
+  latdat = 'LatsHimawari.dat'
+
+  ### LOAD
+  glon = read_csv(londat)      # satellite grid lon
+  glat = read_csv(latdat)      # satellite grid lat
+
+  # transform glon to 0-360°
+  glon = (glon + 360) % 360
+
+  #cwd    = os.getcwd()
+  #os.chdir(datdir)
+  files  = glob.glob('*.pyRET')
+  #os.chdir(cwd)
+  files.sort()
+  nf = len(files)
+
+  for i in range(0,nf):
+     f = files[i]
+
+*    #-- Dataset of ash pixels
+*    #   ds[:,0]  --> lon
+*    #   ds[:,1]  --> lat
+*    #   ds[:,2]  --> ash in g m-2
+*    ds   = read_csv(f)         # dataset of ash pixels
+*
+*    day  = f[-12:-10]
+*    hour = f[-10:-8]
+*
+*    # transform data vector onto satellite grid
+*    start_t = time.time()
+*    gash = np.zeros(glon.shape)
+*
+*    npix = ds.shape[0]
+*    for j in range(0,npix):
+*
+*      lo = ds[j,0]
+*      la = ds[j,1]
+*
+*      lon_mask = glon == lo
+*      lat_mask = glat == la
+*
+*      gash[lon_mask & lat_mask] = ds[j,2]
+*
+*    end_t  = time.time()
+*    diff_t = end_t - start_t
+*
+*    ### SAVE variables
+*    svar = 'remapped_{}_new.npz'.format(f[0:-6])
+*    np.savez(svar,
+*            glon=glon,
+*            glat=glat,
+*            gash=gash,
+*            day=day,
+*            hour=hour)
+*
+*    print('finished: {} in {:f} sec'.format(f,diff_t))
+
+  print('FINISHED!')
+```
+
+
+---
+
+# Parallelisation of code
+
+Ideal code for parallelisation since the script is executed per file
+
+```python
+def main():
+  ### SET
+  # data
+  #datdir = ''
+  dat    = 'DataHimawari.pyRET'
+  londat = 'LonsHimawari.dat'
+  latdat = 'LatsHimawari.dat'
+
+  ### LOAD
+  glon = read_csv(londat)      # satellite grid lon
+  glat = read_csv(latdat)      # satellite grid lat
+
+  # transform glon to 0-360°
+  glon = (glon + 360) % 360
+
+  #cwd    = os.getcwd()
+  #os.chdir(datdir)
+  files  = glob.glob('*.pyRET')
+  #os.chdir(cwd)
+  files.sort()
+  nf = len(files)
+
+  for i in range(0,nf):
+     f = files[i]
+*    process_file(f, glon, glat)
+  print('FINISHED!')
+
+def process_file(f, glon, glat):
+  # snipped code
+  np.savez(svar,
+    glon=glon,
+    glat=glat,
+    gash=gash,
+    day=day,
+    hour=hour)
+
+if __name__ == '__main__':
+  main()
+
+
+```
+---
+
+# Parallelisation of code
+
+- Now the script is ready for parallelisation
+- Using the `concurrent` module for parallelisation
+
+```python
+from concurrent import futures
+
+def main():
+    # snipped code
+
+    with futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+      jobs = {executor.submit(process_file, f, glon, glat): f for f in files}
+      for future in futures.as_completed(jobs):
+          f = jobs[future]
+          try:
+              # get result of computation
+              result = future.result()
+          except Exception as exc:
+              # handle any errors
+              print('File %r generated an exception: %s' % (f, exc))
+          else:
+              # handle all successful calls
+              svar = 'remapped_{}_new.npz'.format(f[0:-6])
+              np.savez(svar, **result)
+              print("finished: {}".format(f))
+    print('FINISHED!')
+```
+
+
+
+
+---
+
+class: center, middle
+background-image: url(Thats_all_folks.svg)
+background-size: cover
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({
+        ratio: '4:3',
+        highlightStyle: 'dracula',
+        highlightLines: true,
+        navigation: {
+          scroll: false,
+        }
+      });
+    </script>
+  </body>
+</html>
