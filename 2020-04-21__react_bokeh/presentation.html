@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>An Interactive Analytics Dashboard for Climate Research</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Merriweather:400);
+      @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Roboto:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=PT+Mono:400,700,400italic);
+
+            .left-column {
+        width: 45%;
+        float: left;
+        margin-right: 10px;
+      }
+      .right-column {
+        width: 48%;
+        float: right;
+      }
+
+      body { font-family: 'Montserrat'; }
+      h1, h2, h3 {
+        font-family: 'Roboto';
+        font-weight: normal;
+      }
+      .remark-slide-content h1 {
+        font-size: 40px;
+      }
+      .remark-slide-content h2 {
+        font-size: 30px;
+      }
+      .remark-slide-content {
+        font-size: 23px;
+      }
+      table, td, th {
+        border: 1px solid black;
+      }
+      td {
+        padding: 10px;
+      }
+      img {
+        max-width: 100%;
+      }
+      .logo img {
+        width: 20%;
+      }
+      .grey {
+        color: grey;
+      }
+      .red {
+        color: red;
+      }
+      .green {
+        color: green;
+      }
+
+      .remark-code, .remark-inline-code {
+        font-family: 'PT Mono', monospace;
+      }
+
+      .remark-inline-code {
+        background: lightgray;
+        padding-left: 5pt;
+        margin-bottom: 5pt;
+        margin-top: 5pt;
+        padding-right: 5pt;
+        border-radius: 5px;
+        font-size: 21px;
+      }
+      .remark-code {
+        max-height: 400px;
+        border-radius: 15px;
+        font-size: 16px;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: center, middle
+
+
+# An Interactive Analytics Dashboard for Climate Research 
+## (2020-04-22)
+
+---
+
+# Goal
+
+Build an **interactive web platform** to browse and view climate simulation data.
+
+- Let the scientists **view** the datasets
+- **Calculate** descriptive statistics for the datasets
+- **Discover** similar datasets
+
+.center[<a data-flickr-embed="true" href="https://www.flickr.com/photos/losalamosnatlab/16374395761/in/photostream/" title="Global Surface Kinetic Energy"><img src="https://live.staticflickr.com/7321/16374395761_a3babaa08f_w.jpg" width="400" height="274" alt="Global Surface Kinetic Energy"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>]
+---
+# Motivation
+
+The data volume of the current climate simulation outputs are too big.
+
+- Help **reduce** data duplication and distribution
+- Data access is more **easily handled**
+- Visualisation can help **gather new insights**
+
+.center[<a data-flickr-embed="true" href="https://www.flickr.com/photos/losalamosnatlab/16376102935/in/photostream/" title="The Art of Climate Modeling"><img src="https://live.staticflickr.com/8571/16376102935_002fea8384_n.jpg" width="400" height="274" alt="The Art of Climate Modeling"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>]
+
+---
+# Project Status
+
+- .green[Part 1: Technology research: **Bokeh**]
+- .green[Part 2: Backend improvements: **gRPC**]
+- .red[Part 3: UX development: **React** (_candidate_)]
+- .grey[Part 4: Deployment]
+- .grey[Part 5: ...]
+
+.center[
+
+.logo[![bokeh](https://pyviz-dev.github.io/pyviz/assets/bokeh.png)]
+
+.logo[![grpc](https://miro.medium.com/max/1400/1*MlYq4Q5Rdi7K8QGrN5JeaA.png)]
+
+.logo[![react](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSoJfFTUKko-KaVpiddJqW8KkJ5qg3jc5Qqbv82ayk6SJA-7DDD&usqp=CAU)]
+
+]
+---
+
+# UX Development: React (candidate)
+
+![Example](https://s3.eu-west-2.amazonaws.com/devias/products/Blog+Photos/ant+design.png)
+---
+
+class: center, middle
+background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpearlsofprofundity.files.wordpress.com%2F2013%2F07%2Fthats-all-folks-3a.jpg&f=1&nofb=1)
+background-size: cover
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({
+        ratio: '4:3',
+        highlightStyle: 'dracula',
+        highlightLines: true,
+        navigation: {
+          scroll: false,
+        }
+      });
+    </script>
+  </body>
+</html>
+
