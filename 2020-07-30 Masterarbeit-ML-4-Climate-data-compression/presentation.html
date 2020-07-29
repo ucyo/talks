@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Python 2 to 3</title>
+    <title>Verlustfreie Kompression von Klimadaten mit Machine Learning</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Merriweather:400);
@@ -22,15 +22,60 @@ class: center, middle
 
 ---
 
-# Einfuehrung
+# Einführung
 
-- Wieso ist das Thema so wichtig?
+## Problem
+Die Klimawissenschaften generieren sehr hohen Simulationsoutput (insgesamt 770 TiB)
+
+## Aktuelle Lösung
+Reduzierung der zeitlichen Auflösung und gespeicherten Variablen
+
+## Folgen
+- Klimaereignisse möglicherweise nicht abgebildet
+- Benutzung von Interpolationen
+- Neuberechnung von Simulationen
+
+---
+
+# Klimadaten
+
+- 4D Daten (Längen- u. Breitengrad, Höhe, Zeit)
+- .red[Add picture]
+
+---
+
+# Kompression
+
+- Vorhersagebasierte Kompression ist am erfolgreichsten für Klimadaten (bei verlustfreier Kompression)
+
+--
+- Ablauf
+  - Dekorrelation der Daten
+     1. Jeder einzelne Datenpunkt wird einzeln betrachtet und eine Vorhersage gegeben
+     2. Je besser die Vorhersage ist, desto kleiner ist das Residuum
+     3. Je kleiner das Residuum ist, desto kleiner ist die finale Dateigröße
+     4. Für die Vorhersage können nur die Datenpunkte verwendet werden, die bereits gesehen wurden (Symmetrie)
+--
+  - Kodierung des Residuums, sowie der Travesierungs- und Vorhersageverfahrens
+---
+
+# Kompression
+
+.red[Erklärung in Bildern]
 
 ---
 
 # Wissenschaftliche Fragestellungen
 
-- Was sind offene Fragen, welche mit der Arbeit bearbeitet werden sollen
+- Welche Featuressets können für die Vorhersage verwendet werden?
+  - Breite- u.Längengrad, Höhe
+  - Lokale Uhrzeit und Jahreszeit
+  - Land/Wasser
+  - Variablenabhängigkeit (Temperatur, Wasserdampf, Luftfeuchte)
+- Wie können diese Features kodiert werden?
+- Welche Abhängigkeit besteht zwischen Traversierung und Vorhersage?
+- Wie kann die Traversierung auf die Daten abgestimmt werden?
+
 ---
 
 # Aufgaben
@@ -41,9 +86,15 @@ class: center, middle
 
 ---
 
-# Probleme und Herausforderungen
+# Stand der Technik
 
-- Welche Probleme/Herausforderungen sind zu beachten?
+- .red[ML/AI Paper für die Kompression von Daten]
+- Lossless Image Compression through Super-Resolution [2020]
+- High-Fidelity Generative Image Compression [2020]
+- Estimating Lossy Compressibility of Scientific Data Using Deep Neural Networks [2020]
+- Adaptive Deep Learning based Time-Varying Volume Compression [2020]
+- Lossless Data Compression with Neural Networks [2019]
+- DeepFovea: Neural Reconstruction for Foveated Rendering and Video Compression using Learned Statistics of Natural Videos [2019]
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">

@@ -7,11 +7,15 @@
   width: 48%;
   float: right;
 }
+p, ul {
+  margin-top: 5px;
+}
 
 body { font-family: 'Montserrat'; }
 h1, h2, h3 {
   font-family: 'Roboto';
   font-weight: normal;
+  margin-bottom: 10px;
 }
 .remark-slide-content h1 {
   font-size: 40px;
@@ -25,6 +29,14 @@ h1, h2, h3 {
 table, td, th {
   border: 1px solid black;
 }
+
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+
 td {
   padding: 10px;
 }
