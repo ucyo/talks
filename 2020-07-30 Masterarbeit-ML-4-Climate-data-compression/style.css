@@ -7,8 +7,13 @@
   width: 48%;
   float: right;
 }
-p, ul {
-  margin-top: 5px;
+
+.sdt li {
+    margin-top: 20px;
+}
+
+p, ul, li {
+  margin-top: 10px;
 }
 
 body { font-family: 'Montserrat'; }
@@ -55,3 +60,18 @@ td {
   font-size: 21px;
 }
 
+.scheme1 {
+  color: #264653
+}
+.scheme2 {
+  color: #2A9D8F
+}
+.scheme3 {
+  color: #E9C46A
+}
+.scheme4 {
+  color: #F4A261
+}
+.scheme5 {
+  color: #E76F51
+}
