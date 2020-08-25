@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Python 2 to 3</title>
+    <title>Python packaging and dependency management</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Merriweather:400);
@@ -28,25 +28,73 @@ Python Meeting IMK
 
 # Why setting up environments?
 
-- Reproducibility
-- Different dependencies of projects
-- Testing of different environements (Python3.5, 3.6, ...)
-- Isolation / Starting with a clean sheet
+- **Reproducibility** <br> The Python application should run everywhere as intended.
+- **Dependency of projects** <br> Projects might use modules working only with specific versions 
+- **Support more Python versions** <br> Projects running e.g. with `Python3.5`, `3.6`, ..., `2.7` .red[**:(**]
+- **Isolation** <br> Starting with a blank sheet
+
+How is the current field of Python dependency management? 
+---
+
+# Python Dependency Management
+
+.center[<img src="https://imgs.xkcd.com/comics/python_environment.png" width=470>]
 
 ---
 
-# Poetry
+# Python **Interpreter** Vs. Python **Module** 
 
-*Python packaging and dependency management made easy*
+.left-column[
+  ## Python versions
+  
+  Select which Python interpreter to use e.g. `python3.8`, `python2.7`,
+  `python3.8.2`
 
-- (all of the previous)
-- Packaging of projects
-- Publishing on PyPI
-- Testing environment integrated
-- Single configuration file
-- Single CLI tool
+  ```bash
+  pyenv
+  ```
 
-https://python-poetry.org/
+  - Local installation of every possible Python version e.g pypy, (ana/mini)conda, jython
+  - Simple switch per project/folder possible
+]
+
+.right-column[
+  ## Module versions
+  Define which library modules to use e.g. `numpy19.0.2`, `pandas1.2.4`, `xarray2.21.2` 
+
+  ```bash
+  poetry
+  ```
+
+  - Dependency management
+  - Packaging to wheels/tars
+  - Publishing to PyPI
+  - Single configuration file
+  ]
+
+---
+
+# Pyenv (Install/Uninstall)
+
+*Download installer*
+```bash
+wget https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer
+```
+
+*Install*
+```bash
+bash pyenv-installer
+```
+
+*Update*
+```bash
+pyenv update
+```
+
+*Uninstall*
+```bash
+rm -rf $(pyenv root)
+```
 
 ---
 
@@ -164,18 +212,18 @@ poetry build
 ```bash
 poetry publish
 ```
-
-
 ---
 
-# Alternatives/Additions
+# There are also other options
 
-- (Ana)conda <br> Environements incl. binaries
+## Alternatives
+- (Ana)conda <br> Environments incl. binaries
 - venv
-- pyenv <br> Python binary management
 - virtualenv +virtualenvwrapper
 - pipenv
 
+## Additions
+- pyenv <br> Python binary management
 
 ---
 
