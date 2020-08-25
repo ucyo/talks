@@ -50,6 +50,22 @@ How is the current field of Python dependency management?
   Select which Python interpreter to use e.g. `python3.8`, `python2.7`,
   `python3.8.2`
 
+]
+
+.right-column[
+  ## Module versions
+  Define which library modules to use e.g. `numpy19.0.2`, `pandas1.2.4`, `xarray2.21.2` 
+]
+---
+
+# Python **Interpreter** Vs. Python **Module** 
+
+.left-column[
+  ## Python versions
+  
+  Select which Python interpreter to use e.g. `python3.8`, `python2.7`,
+  `python3.8.2`
+
   ```bash
   pyenv
   ```
@@ -129,10 +145,18 @@ python get-poetry.py --uninstall
 --
 .red[
 *Sane defaults?*
+]
+
+---
+
+# Sane defaults
+
 ```bash
 poetry config virtualenvs.in-project true
 ```
-]
+This will create a `.venv` folder in the project root where all module files are installed. 
+
+.center[<img src="https://media1.tenor.com/images/07c478f6cc6565d81a83c59e1dd1298f/tenor.gif?itemid=16352703" width=370>]
 
 ---
 
@@ -636,6 +660,9 @@ awesome-demo
     ├── __init__.py
     └── test_awesome_demo.py
 ```
+--
+.green[All the magic is done in `pyproject.toml`]
+
 ---
 
 # Poetry (Project creation)
