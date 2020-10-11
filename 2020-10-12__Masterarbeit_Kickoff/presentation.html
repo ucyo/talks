@@ -17,23 +17,24 @@
 class: center, middle
 
 
-# Masterarbeit
-## Verlustfreie Kompression von <br> Klimadaten mit Machine Learning
+# Kickoff: Masterarbeit
+## Verlustbehaftete Kompression von <br> Klimadaten mit Machine Learning
 
-[2020/10/09]
+[2020/10/12]
 
 ---
 
 # Agenda
 
-- Problematik
-- 
+- Beschreibung der Problematik
+- Wiederholung der Ziele der Masterarbeit
+- **Startschuss für die Masterarbeit**
 
 ---
 
-# Einführung
+# Problem
 
-## Problem
+## Datenmenge
 Die Klimawissenschaften generieren sehr hohe Datenmengen (zur Zeit ca. 770 TiB)
 
 ## Aktuelle Lösung
@@ -43,6 +44,68 @@ Reduzierung der zeitlichen Auflösung und gespeicherten Variablen
 - Klimaereignisse möglicherweise nicht abgebildet
 - Benutzung von Interpolationen
 - Neuberechnung von Simulationen
+
+---
+
+# Daten für die Masterarbeit
+
+Als Datensatz werden wir die ERA5 Daten verwenden
+
+- Pressure level data
+  - Horizontale Auflösung: 0.25°x0.25° (1440x721)
+  - Vertikale Auflösung: 1000hPa bis 1hPa (37)
+  - Zeitliche Auflösung: stündl. seit 1979 (~360k)
+  - ~50 TiB (f32) pro Variable
+  - z.B. Temperatur, O3, Wind(richtungen)
+- Single level data
+  - Keine vertikale Auflösung
+  - ~1.4 TiB (f32) pro Variable
+
+---
+
+# Daten für die Masterarbeit
+
+Optionen zur Reduzierung der Trainingsdaten in handhandbare Größen:
+- Reduzierung auf Deutschland bzw. Europa
+- Aufteilung nach Schwierigkeit der Vorhersage:
+  -  leichte Regionen (z.B. Meer, Stratosphäre)
+  -  schwierige Regionen (z.B. Küsten, Gebirge)
+- Aufteilung der zeitlichen Dimension in Jahrzehnten
+
+---
+
+# Organisatorisches
+
+## Lokaler Speicherplatz
+
+- 100 TiB auf LSDF
+- alle Teilnehmer haben Zugriff auf die Daten
+- `/lsdf01/lsdf/kit/scc/projects/abcde`
+
+---
+
+# Ergebnisse vom unserem letztem Meeting
+
+- Verlustbehaftete Kompression
+- High Impact bzgl. Kompressionsfaktor
+- Keine Einschränkung der ML/AI Verfahren
+  - (Un)Supervised Learning bzw. Reinforcement Learning
+  - Erste Ansätze mit Supervised Learning testen
+- Einfache Traversierung -> Zeilenweise
+
+---
+
+# ML-Lernziele
+
+- Lernen von unterschiedlichen Stencils
+- Lernen von Wechseln zwischen Stencils
+- Lernen von Unterteilung des Datensatzes für passende Stencils
+- Lernen von wichtigen Features (i.e. Featureselection)
+  - Breite- u. Längengrad sowie die Höhe
+  - Lokale Uhrzeit und Jahreszeit
+  - Land/Wasser
+  - Prognostische Variablen <br> (Temperatur, Luftfeuchtigkeit, Wirbelstärke)
+  - Variablenabhängigkeiten <br> (Temperatur und Wasserdampf, ...)
 
 ---
 
@@ -63,4 +126,3 @@ background-size: cover
     </script>
   </body>
 </html>
-
