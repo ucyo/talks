@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Masterarbeit Kickoff</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Merriweather:400);
+      @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Roboto:400,700,400italic);
+    </style>
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: center, middle
+
+
+# Kickoff: Masterarbeit
+## Unterstützung von Bodenmessungen <br> mit Hilfe von Satellitendaten
+
+[2020/10/16]
+
+---
+
+# Agenda
+
+- Idee
+- Herangehenweise
+- Diskussion 
+  - Datenquellen?
+  - Umsetzbarkeit?
+  - Organisatorisches?
+
+---
+
+# Idee
+
+Ein AI/ML-Verfahren zu entwickeln, welches bei der **Inter- oder Extrapolation** von .green[**Bodenmessungen unterstützt**].
+Für diese Unterstützung sollen **Satellitendaten** verwendet werden, weil diese eine größere Fläche mit Messdaten abdecken.
+
+# Ursprung
+
+- Diskussion in der IMK Datenmanagement-Gruppe 
+- Sehr sporadische Abdeckung der Bodenfeuchtemeßungen des DWD (Stichwort: Dürreindex)
+
+# Masterand
+
+- Julian Müller, MSc Computer Science
+- ab November 2020
+
+---
+
+# Herangehenweise
+
+- Datensatz basierend auf .green[**Satellitendaten**] aufbauen
+  - Idealerweise mit **niedriger Wiederkehrzeit** (2/3 Tage?)
+  - Idealerweise mit **hoher Auflösung**
+  - Idealerweise mit **hohem Messerfolg** <br> (z.B. unabhängig von Wolkenbedeckung: Radar?)
+--
+
+- Datensatz mit .green[**Bodenmessungen**] annotieren/klassifizieren
+  - Idealerweise mit temporaler Abdeckung **ähnlich/besser wie die Satellitendaten** 
+  - Idealerweise mit (sehr) **guter Abdeckung** [Widerspruch?]
+  - [?] Idealerweise nur quantitative **oder** nur qualitative Werte
+--
+
+- Erlernen von .green[**ML/AI-Verfahren**]
+  - Supervised für bekannte physikalische Zusammenhänge
+  - Unsupervised für datenbasiertes Lernen
+---
+
+# Diskussion
+
+- Welche **Satellitendaten** können/sollen wir verwenden?
+  - Sentinel 1/2?
+- Welche **Variablen** sind von Interesse?
+  - "Einfache" Variablen (z.B. Temperatur, Luftfeuchtigkeit)?
+  - "Schwierige" Variablen (z.B. Bodenfeuchte, Bodennutzung)?
+- Zu welchen Variablen gibt es genügend **Bodenmessungen**?
+  - Wie definieren wir 'genügend'?
+
+Und natürlich: <br> Was ist im Rahmen einer Masterarbeit möglich?
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({
+        ratio: '4:3',
+        highlightStyle: 'dracula',
+        highlightLines: true,
+      });
+    </script>
+  </body>
+</html>
+ 
