@@ -8,17 +8,26 @@
   float: right;
 }
 
-body { font-family: 'Montserrat'; }
+body { 
+  font-family: 'Open Sans'; 
+  font-weight: 400;
+
+}
 h1, h2, h3 {
   font-family: 'Roboto';
-  font-weight: normal;
+  font-weight: 500;
   margin-bottom: 0px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 li {
   margin-bottom: 10px;
   margin-top: 10px;
+}
+
+ul {
+  margin-bottom: 10px;
+  margin-top: 0px;
 }
 
 .remark-slide-content h1 {
@@ -42,6 +51,9 @@ td {
 }
 .green {
   color: green;
+}
+.gray {
+  color: gray;
 }
 
 .remark-code, .remark-inline-code {
