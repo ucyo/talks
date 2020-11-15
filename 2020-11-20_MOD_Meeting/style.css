@@ -3,6 +3,11 @@
   float: left;
   margin-right: 10px;
 }
+.left-column-big {
+  width: 55%;
+  float: left;
+  margin-right: 10px;
+}
 .right-column {
   width: 45%;
   float: right;
@@ -23,6 +28,7 @@ h1, h2, h3 {
 li {
   margin-bottom: 10px;
   margin-top: 10px;
+  padding-right: 10px;
 }
 
 ul {
@@ -51,6 +57,9 @@ td {
 }
 .green {
   color: green;
+}
+.white {
+  color: white;
 }
 .gray {
   color: gray;
