@@ -3,22 +3,41 @@
   float: left;
   margin-right: 10px;
 }
+.left-column-big {
+  width: 55%;
+  float: left;
+  margin-right: 10px;
+}
 .right-column {
   width: 45%;
   float: right;
 }
 
-body { font-family: 'Montserrat'; }
+img {
+  margin-left: 40px;
+}
+
+body { 
+  font-family: 'Open Sans'; 
+  font-weight: 400;
+
+}
 h1, h2, h3 {
   font-family: 'Roboto';
-  font-weight: normal;
+  font-weight: 500;
   margin-bottom: 0px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 li {
   margin-bottom: 10px;
   margin-top: 10px;
+  padding-right: 10px;
+}
+
+ul {
+  margin-bottom: 10px;
+  margin-top: 0px;
 }
 
 .remark-slide-content h1 {
@@ -42,6 +61,12 @@ td {
 }
 .green {
   color: green;
+}
+.white {
+  color: white;
+}
+.gray {
+  color: gray;
 }
 
 .remark-code, .remark-inline-code {

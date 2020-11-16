@@ -18,30 +18,76 @@ class: center, middle
 
 
 # Metadata
-## Entwicklung einer Metadaten-DB für Klimadaten
+## Development of a Metadata Catalogue for Climate Data
 
 [2020/11/19]
 
 ---
 
-# Agenda
+# NetCDF Catalogue
 
-- Point 1
-- Point 2
+- First task at IMK as a new PhD student
+- Task was to make data searchable and discoverable
+- Developed a Command Line Interface (CLI) tool
+- JSON-formated output from MongoDB
+- Technology stack:
+  - Click: Parsing the command line arguments
+  - MongoDB: Document-based database
+
+.white[asdfs]
+
+.center[<img src="https://click.palletsprojects.com/en/7.x/_images/click-logo.png" height="90"> 
+        <img src="https://www.fullstackpython.com/img/logos/mongodb.jpg" height="90">]
 
 ---
 
-# Point 1
+# NetCDF Catalogue
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+- Use either DB or on file basis
+- Split into two parts:
+  - metacli @ https://git.scc.kit.edu/ku8837/metacli
+  - metamongo @ https://git.scc.kit.edu/ku8837/metamongo/
+  - DB @ https://nc-catalogue.scc.kit.edu
+- Initial commit **5th October 2015**
+- Last commit **21th January 2016**
+- Server `nc-catalogue` shutdown **beginning of 2017**
+
+.white[asdfs]
+
+.center[<img src="https://click.palletsprojects.com/en/7.x/_images/click-logo.png" height="90"> 
+        <img src="https://www.fullstackpython.com/img/logos/mongodb.jpg" height="90">]
 
 ---
 
-# Point 2
+# NetCDF Catalogue Features
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+- Search for variables
+  - based on `short_name`, `long_name` or `standard_name`
+  - based on variable name in model or Climate and Forecast (CF) conventions
+- Filter
+  - closest data point to a given `lat x lon` position
+  - within a certain area given by two `lat x lon` positions
+  - before a certain timestamp (incl./excl.)
+  - after a certain timestamp (incl./excl.)
+  - between two timestamps (incl./excl.)
+  - used model (`EMAC`, `ICON`, ...)
+  - used model settings (`R2B5`, `T42xxx`)
 
+---
 
+# NetCDF Catalogue
+  
+  - No third party library for indexing was used
+  - Introduced the library at the EMAC meetings
+  - Never established itself and no real usage numbers
+  - Difficulties:
+    - Mapping of CF conventions to actual variables
+    - Parsing of the data
+    - Building a common structure for indexing i.e. searching
+  - Leassons learned:
+    - Promote tool using every opportunity
+  - Codebase is archived @ <br> https://git.scc.kit.edu/ku8837/metamongo/
+  
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
     </script>
