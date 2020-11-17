@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Masterarbeit Kickoff</title>
+    <title>Metamongo</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Merriweather:400);
@@ -17,19 +17,19 @@
 class: center, middle
 
 
-# Metadata
-## Development of a Metadata Catalogue for Climate Data
+# NetCDF Catalogue
+## Metadata for Climate Data
 
-[2020/11/19]
+Data Management Meeting <br> on 19 Nov. 2020
 
 ---
 
-# NetCDF Catalogue
+# NetCDF Catalogue: Environment
 
 - First task at IMK as a new PhD student
 - Task was to make data searchable and discoverable
 - Developed a Command Line Interface (CLI) tool
-- JSON-formated output from MongoDB
+<!-- - JSON-formated output from MongoDB -->
 - Technology stack:
   - Click: Parsing the command line arguments
   - MongoDB: Document-based database
@@ -41,13 +41,13 @@ class: center, middle
 
 ---
 
-# NetCDF Catalogue
+# NetCDF Catalogue: Organisation
 
-- Use either DB or on file basis
-- Split into two parts:
+- Split into three parts:
   - metacli @ https://git.scc.kit.edu/ku8837/metacli
   - metamongo @ https://git.scc.kit.edu/ku8837/metamongo/
   - DB @ https://nc-catalogue.scc.kit.edu
+- Use either DB or on file basis
 - Initial commit **5th October 2015**
 - Last commit **21th January 2016**
 - Server `nc-catalogue` shutdown **beginning of 2017**
@@ -59,7 +59,7 @@ class: center, middle
 
 ---
 
-# NetCDF Catalogue Features
+# NetCDF Catalogue: Features
 
 - Search for variables
   - based on `short_name`, `long_name` or `standard_name`
@@ -75,7 +75,7 @@ class: center, middle
 
 ---
 
-# NetCDF Catalogue
+# NetCDF Catalogue: Features
   
   - No third party library for indexing was used
   - Introduced the library at the EMAC meetings
