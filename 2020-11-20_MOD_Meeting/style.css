@@ -64,6 +64,9 @@ td {
 .gray {
   color: gray;
 }
+.lightgray {
+  color: #f2f2f2;
+}
 
 .remark-code, .remark-inline-code {
   font-family: 'cyo';
