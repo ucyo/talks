@@ -40,6 +40,12 @@ ul {
   margin-top: 0px;
 }
 
+.pad {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+
 .remark-slide-content h1 {
   font-size: 40px;
 }

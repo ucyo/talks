@@ -466,6 +466,160 @@ Agg. 3: Mean value across altitudes and latitudes.
 ]
 ]
 ---
+# AI-based lossy compression (thesis)
+
+- **Goal** <br> Apply AI/ML-based methods for lossy compression of high resolution climate data
+- **Co-Supervisor**
+  - Prof. Peter Sanders (ITI)
+  - Jun. Prof. Pascal Friederich (ITI)
+- **Student:** Silke Donayre
+- **Timeline:** 1st October 2020 - 31th March 2020
+
+.center[.middle[
+<img src="https://algo2.iti.kit.edu/img/content/ae_cycle_AE-1.png" height="185">
+]
+]
+
+---
+# AI-based lossy compression (thesis)
+
+Streamlining the objective for the master thesis 
+- Lossy compression: Possible high-impact
+- Use available, simple and high-resolution data: ERA5
+- Train pressure level data, use single level as features 
+- After first couple tests: Autoencoder (CNN)
+- Concentrating on data preparation and feature extraction 
+
+.center[.middle[
+<img src="https://i2.wp.com/sefiks.com/wp-content/uploads/2018/03/convolutional-autoencoder.png?w=1818&ssl=1" 
+ height="215">
+]
+]
+
+---
+# ERA5 Data Download & Feature Extraction 
+
+- Download ERA5 to LSDF
+  - Automated tool for downloading the datasets: <br> *"start & forget"*
+  - Easy tracking of downloads (Website)
+  - Bigger files, than HTTP downloads from ECMWF
+- Calculate additionally to single level data further features:
+  - Local time
+  - Terminator 🤖
+  - Land/Sea mask
+
+---
+# ERA5 Data (11 TB)
+
+- Pressure Level Data <br> (0.25 x 0.25, 37 levels, hourly, 16 variables)
+- Single Level Data <br> (0.25 x 0.25, 1 level, hourly, 26 of a lot of variables)
+
+```bash
+[ku8837@eos ~]$ ls /abcde/1979/11/
+ERA5.pl.divergence.nc                           ERA5.sl.10m_v_component_of_wind.nc
+ERA5.pl.fraction_of_cloud_cover.nc              ERA5.sl.10m_wind_gust_since_previous_post_processing.nc
+ERA5.pl.geopotential.nc                         ERA5.sl.2m_temperature.nc
+ERA5.pl.ozone_mass_mixing_ratio.nc              ERA5.sl.cloud_base_height.nc
+ERA5.pl.potential_vorticity.nc                  ERA5.sl.evaporation.nc
+ERA5.pl.relative_humidity.nc                    ERA5.sl.high_vegetation_cover.nc
+ERA5.pl.specific_cloud_ice_water_content.nc     ERA5.sl.instantaneous_10m_wind_gust.nc
+ERA5.pl.specific_cloud_liquid_water_content.nc  ERA5.sl.lake_cover.nc
+ERA5.pl.specific_humidity.nc                    ERA5.sl.land_sea_mask.nc
+ERA5.pl.specific_rain_water_content.nc          ERA5.sl.low_cloud_cover.nc
+ERA5.pl.specific_snow_water_content.nc          ERA5.sl.low_vegetation_cover.nc
+ERA5.pl.temperature.nc                          ERA5.sl.orography.nc
+ERA5.pl.u_component_of_wind.nc                  ERA5.sl.sea_ice_cover.nc
+ERA5.pl.v_component_of_wind.nc                  ERA5.sl.sea_surface_temperature.nc
+ERA5.pl.vertical_velocity.nc                    ERA5.sl.soil_type.nc
+ERA5.pl.vorticity.nc                            ERA5.sl.surface_pressure.nc
+ERA5.sl.100m_u_component_of_wind.nc             ERA5.sl.total_cloud_cover.nc
+ERA5.sl.100m_v_component_of_wind.nc             ERA5.sl.total_column_ozone.nc
+ERA5.sl.10m_u_component_of_neutral_wind.nc      ERA5.sl.total_precipitation.nc
+ERA5.sl.10m_u_component_of_wind.nc              ERA5.sl.type_of_high_vegetation.nc
+ERA5.sl.10m_v_component_of_neutral_wind.nc      ERA5.sl.type_of_low_vegetation.nc
+```
+
+---
+# ERA5 Download Tool
+
+```python
+#!/usr/bin/env python
+# coding: utf-8
+
+from datarequests.era5 import ERA5PressureLevelsRequest, ERA5SingleLevelsRequest
+from datarequests.defaults import year, month
+from datarequests.variables import PRESSURE_LEVELS
+
+
+for v in PRESSURE_LEVELS:
+    for y in ["1979"]:
+        for m in month():
+            req = ERA5PressureLevelsRequest(
+                variable=[v], year=[y], month=[m]
+            )
+            req.send_request(f"/abcde/{y}/{m}/ERA5.pl.{v}.nc")
+```
+
+
+---
+# ERA5 Download Tool
+
+- Written in Python
+- Consists of four technologies: <br> Docker, Redis (In-Memory DB), Redis Worker, RQ Dashboard (Bootstrap)
+- A request can be in one of several states:
+  - **Failed**: requests are saved for 1 year
+  - **Finished**: requests are saved for 500 seconds
+  - **Started**: jobs are killed after 60 minutes
+  - and **Queued**, **Scheduled**, **Deferred**
+
+.center[.middle[
+<img src="https://upload.wikimedia.org/wikipedia/en/6/6b/Redis_Logo.svg"  height="55">
+.footnote[.white[sd]]
+<img src="https://python-rq.org/img/ribbon.png"  height="75">
+.white[sd]
+<img src="https://miro.medium.com/max/1024/1*9HanDsRU11ZMsgDGJwN96w.png"  height="75">
+.white[sd]
+<img src="https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png"  height="75">
+]
+]
+
+---
+# ERA5 Download Tool (workflow)
+
+1. User requests downloads (by executing the script)
+2. System checks history for same request
+3. System queues the request
+4. Idle worker nodes ask for download tasks and executes it
+
+The status of the current jobs can be checked at
+
+.pad[
+.center[
+http://eos.scc.kit.edu:9181/
+]
+]
+
+.center[.middle[
+<img src="https://upload.wikimedia.org/wikipedia/en/6/6b/Redis_Logo.svg"  height="55">
+.footnote[.white[sd]]
+<img src="https://python-rq.org/img/ribbon.png"  height="75">
+.white[sd]
+<img src="https://miro.medium.com/max/1024/1*9HanDsRU11ZMsgDGJwN96w.png"  height="75">
+.white[sd]
+<img src="https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png"  height="75">
+]
+]
+
+---
+# Summary
+
+- There are several great projects **in preparation**, currently **ongoing** and **just waiting** to be tackled.
+- **Collaborations** with colleagues from different fields can only improve our research.
+- Data exploration enabled through **interactive data visualisation** will be a key advantage in the future.
+- Hopefully the results from Silkes master thesis and ABCDE will show that  **lossy data compression** is not necessarily a bad thing.
+
+**Thank you**
+---
 
 class: center, middle
 background-image: url(Thats_all_folks.svg)
@@ -485,3 +639,4 @@ background-size: cover
   </body>
 </html>
  
+
