@@ -31,6 +31,10 @@ li {
   padding-right: 10px;
 }
 
+.svg {
+  filter: invert(98%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) ontrast(119%);
+}
+
 ul {
   margin-bottom: 10px;
   margin-top: 0px;
@@ -46,10 +50,31 @@ ul {
   font-size: 23px;
 }
 table, td, th {
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  border-collapse: collapse;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  padding: 11px;
 }
-td {
-  padding: 10px;
+
+table {
+  margin-top: 10px;
+}
+
+th {
+  background-color: #539554;
+  color: white;
+}
+tr:hover {background-color: #f5f5f5;}
+
+th,td {
+  padding-left: 10px;
+  padding-right: 10px;
+  /* padding: 5px; */
+}
+
+.footnote {
+  font-size: 15px;
 }
 
 .red {

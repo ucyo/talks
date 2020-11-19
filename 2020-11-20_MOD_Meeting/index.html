@@ -227,6 +227,197 @@ https://s.kit.edu/modmeeting
 <img src="https://media.geeksforgeeks.org/wp-content/uploads/a_-search-algorithm-1.png" height="200">
 ]
 
+---
+
+# IFU / Data Mgmt collaboration
+
+- Organisation of a tech workshop
+- Two part event:
+  1. Review use cases and possible technology
+  2. Review of technology
+- IFU: Christof, Christian W, Christian C, Benjamin F
+- ASF: Christian S, me
+
+.white[sdfasd]
+.center[
+<img class="svg" src="https://www.imk-ifu.kit.edu/img/Logo%20CampusAlpin%20Dtsch%20neg_60px.svg" height="120">
+]
+
+---
+
+# WebGL vs WebGPU
+
+- **WebGL**: Established framework for 3D browser visualizations
+- **WebGPU**: New framework for 3D visualizations
+- 2 Tasks:
+  - Comparison of both frameworks regarding: <br> ease of use, feature set, supported programming languages and browsers.
+  - Implementation of a 3D globe with both framework.
+- Example: https://earth.nullschool.net
+
+
+.center[
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/25/WebGL_Logo.svg" height="120">
+.white[as]
+<img src="https://raw.githubusercontent.com/gfx-rs/wgpu-rs/master/logo.png" height="120">
+]
+---
+
+# Native ICON visualisation
+
+- **Problem** <br> Fast visualisation of ICON simulation output
+- **Solution** <br> Use web technologies for interactive plots   
+- **Timeline**
+.center[
+
+|Semester|Topic|
+|--|--|
+|WS18/19| Feasability Analysis|
+|SS19|-|
+|WS19/20| Make it usable: Remote Process Calls|
+|SS20| Extend the feature set: REACT, Multisessions |
+|WS20/21|-| 
+
+]
+
+---
+
+# Native ICON visualisation (past)
+
+- Feasability Analysis (WS18/19)
+  - Student: Max Noppel, Co-Supervisor: Jennifer
+  - Search for possible libraries
+  - Single criteria: Python backend
+  - Compared libraries: Plotly, Bokeh, self-written alternative
+  - Winner: Bokeh (but slooooow) 🐌
+- **Added features** 
+  - Interactive plots
+  - Aggregation across coordinate dimensions
+---
+
+# Native ICON visualisation (past)
+
+- Speed up computation (WS19/20)
+  - Student: Tom George
+  - Search for libraries to speed up calculation and IO
+  - Compared technologies: NFS mounts, remote process calls (gRPC)
+  - Winner: all
+- **Added features** 
+  - External computation of aggregation methods
+  - Streaming visualisation
+  - Core component to make it usable 👀
+  - C++ routines
+
+---
+# Native ICON visualisation (before gRPC)
+
+.white[asd]
+
+|Task|1.9 GiB| 2.6 GiB|4.6 GiB|
+|--|--|--|--|
+|Loading data|3.87s|3.92s|3.93s
+|Main plot|0.38s|0.39s|0.40s
+|Agg. 1|0.54s|0.59s|0.63s
+|Agg. 2|18.11s|24.91s|45.5s
+|Agg. 3|13.86s|18.85s|48.84s
+
+.footnote[
+Agg. 1: Mean value across altitudes. <br>
+Agg. 2: Mean value across latitude. <br>
+Agg. 3: Mean value across altitudes and latitudes.
+]
+
+---
+# Native ICON visualisation (after gRPC)
+
+.white[asd]
+
+|Task|1.9 GiB| 2.6 GiB|4.6 GiB|
+|--|--|--|--|
+|Loading data|.green[2.4s (3.87s)]|.green[2.41s (3.92s)]|.green[2.42s (3.93s)]
+|Main plot|.red[0.42s (0.38s)]|.red[0.42s (0.39s)]|.red[0.42 (0.40s)]
+|Agg. 1|.red[0.67s (0.54s)]|.red[0.75s (0.59s)]|.red[0.91s (0.63s)]
+|Agg. 2|.green[0.09s (18.11s)]|.green[0.09s (24.91s)]|.green[0.11s (45.5s)]
+|Agg. 3|.green[0.24s (13.86s)]|.green[0.3s (18.85s)]|.green[0.38s (48.84s)]
+
+.footnote[
+Agg. 1: Mean value across altitudes. <br>
+Agg. 2: Mean value across latitude. <br>
+Agg. 3: Mean value across altitudes and latitudes.
+]
+
+---
+# Native ICON visualisation (current)
+
+- Extend feature set (SS20)
+  - Student: Julian Müller
+  - UX/UI changes for more intuitive usage
+  - Used technology: REACT
+- **Added features**
+  - Split of backend and frontend
+  - Dockerize content
+  - Multiple plots per sessions
+  - Synchronisation of plots
+---
+# Native ICON visualisation (current view)
+
+.center[.middle[
+<img src="./ncview_icon_native.png" height="555">
+]
+]
+
+---
+# Native ICON visualisation (overview)
+
+.white[sdf]
+.center[.middle[
+<img src="vis-timeline.svg" height="305">
+]
+]
+
+---
+# Native ICON visualisation (tech view)
+
+.white[sdf]
+.center[.middle[
+<img src="./visulisation_tech_view_webgl2.png" height="265">
+]
+]
+---
+# Native ICON visualisation (tech view)
+
+.white[sdf]
+.center[.middle[
+<img src="./visulisation_tech_view_webgl.png" height="265">
+]
+]
+
+---
+# Native ICON visualisation (future)
+
+.white[sdf]
+.center[.middle[
+<img src="vis-timeline-future.svg" height="305">
+]
+]
+
+---
+# Native ICON visualisation (future)
+
+.white[sdf]
+.center[.middle[
+<img src="vis-timeline-future-x.svg" height="305">
+]
+]
+---
+# Native ICON visualisation
+
+## File Explorer View
+.red[Do it!!]
+---
+# Native ICON visualisation
+
+## Authentication Problem
+.red[Do it!!]
 
 ---
 
