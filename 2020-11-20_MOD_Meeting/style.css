@@ -21,8 +21,8 @@ body {
 h1, h2, h3 {
   font-family: 'Roboto';
   font-weight: 500;
-  margin-bottom: 0px;
-  margin-top: 5px;
+  margin-bottom: 25px;
+  margin-top: 15px;
 }
 
 li {
@@ -30,10 +30,10 @@ li {
   margin-top: 10px;
   padding-right: 10px;
 }
-
+/* 
 .svg {
   filter: invert(98%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) ontrast(119%);
-}
+} */
 
 ul {
   margin-bottom: 10px;
