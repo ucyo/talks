@@ -73,161 +73,23 @@
     <textarea id="source">
 
 
-class: center, middle
+class: middle
 
 
-# Python HDF5
-## Python Meeting 2021/02/10
+# wetter-py
+## presentation of code base (2023-04-29)
 
 ---
 
 # Agenda
 
-- Read & Merge HDF5 files
-- Python Environment on FH2/HOREKA
-- Open Discussion
----
-
-## Read & Merge HDF5 files
-
-- Read several HDF5 files with specific structure
-- Merge data
-- Write as NetCDF file
+- Idea gathering
+- Project structure
+- Reasoning for choices
+- Difficulties & surprises
+- Further improvements
 
 ---
-
-
-## Read & Merge HDF5 files
-```python
-import os
-import sys
-import xarray as xr
-import numpy as np
-import h5netcdf  # imported, but only used to check if module is installed
-from datetime import datetime, timedelta
-from glob import glob
-
-BACKEND_KWARGS={'phony_dims': 'sort'}
-
-def main():
-    arg_folder = sys.argv[1]
-    arg_output = sys.argv[2]
-    assert arg_output[-3:] == ".nc", "Output file needs to end with '.nc'"
-
-    hdf5_files = glob(os.path.join(arg_folder, "*.h5"))
-    datasets = [read_single_file(x) for x in hdf5_files]
-    data = xr.merge(datasets)
-    data.to_netcdf(arg_output)
-    print(f"Merged hdf5 files from '{arg_folder}' with time size of {data.time.size} and saved to '{arg_output}'")
-
-def read_single_file(filename):
-    """Read single EM27SUN HDF5 dataset.
-
-    This function reads EM27SUN HDF5 data and transforms coordinate dimensions.
-    If HDF5 files from other resources need to be read, please execute appropiate checks.
-    """
-    data = xr.open_dataset(filename, engine='h5netcdf', backend_kwargs=BACKEND_KWARGS)
-
-    # TODO: If generalization necessary check dimensions and below function
-    data = data.rename_dims({'phony_dim_0':'time','phony_dim_1':'altitude'})
-    data = data.assign_coords({'altitude':data.ALTITUDE[0],'time':data['DATETIME']})
-    decoded_time = [np.datetime64(datetime(year=2000, month=1, day=1) +
-                    timedelta(seconds=x*86400.0)) for x in data.time.values]
-    data = data.assign_coords({'altitude':data.ALTITUDE[0],'time':decoded_time})
-    print(f"Read file {filename} with time size of {data.time.size}")
-    return data
-
-# def check(data):
-#     assert np.array_equal(data.ALTITUDE, np.array([data.ALTITUDE[1].values]*data.time.size))
-#     assert "MJD2K is 0.0 on January 1, 2000 at 00:00:00 UTC" in data.DATETIME.VAR_DESCRIPTION
-
-if __name__ == "__main__":
-    main()
-
-```
-
----
-## Read & Merge HDF5 files
-```python
-import os
-# snip
-from glob import glob
-
-def main():
-    arg_folder = sys.argv[1]
-    arg_output = sys.argv[2]
-    assert arg_output[-3:] == ".nc", "Output file needs to end with '.nc'"
-
-    hdf5_files = glob(os.path.join(arg_folder, "*.h5"))
-    datasets = [read_single_file(x) for x in hdf5_files]
-    data = xr.merge(datasets)
-    data.to_netcdf(arg_output)
-
-def read_single_file(filename):
-    # snip
-    return
-
-if __name__ == "__main__":
-    main()
-
-```
----
-## Read & Merge HDF5 files
-```python
-def read_single_file(filename):
-    """Read single EM27SUN HDF5 dataset.
-
-    This function reads EM27SUN HDF5 data and transforms
-    coordinate dimensions.
-    If HDF5 files from other resources need to be read,
-    please execute appropriate checks.
-    """
-    data = xr.open_dataset(filename,
-                           engine='h5netcdf',
-                           backend_kwargs=BACKEND_KWARGS)
-
-    # TODO: If generalization necessary check dimensions and below function
-    data = data.rename_dims({'phony_dim_0':'time',
-                             'phony_dim_1':'altitude'})
-    data = data.assign_coords({'altitude':data.ALTITUDE[0],
-                               'time':data['DATETIME']})
-    decoded_time = [np.datetime64(datetime(year=2000, month=1, day=1) +
-                    timedelta(seconds=x*86400.0))
-                    for x in data.time.values]
-    data = data.assign_coords({'altitude':data.ALTITUDE[0],
-                               'time':decoded_time})
-    return data
-```
----
-
-## Python Envrionment for FH2/HOREKA
-
-- There will be two environments with two flavours: <br> `geotools` & `geotools-extended` with flavours `stable` & `current`
-
---
-
-- Available environments:
-  - `geotools-stable`
-  - `geotools-current`
-  - `geotools-extended-stable`
-  - `geotools-extended-current`
-
---
-
-- `stable` environment will not be updated **until everyone is notified**
-- `current` environment will be **updated and tested nightly**
-
----
-
-  ## Python Envrionment for FH2/HOREKA
-- Base environment `geotools`
-  - `cartopy,     cdo,     h5netcdf,     h5py,     matplotlib,     nco,     netcdf4,     numpy,     osgeo,
-    pandas,     psyplot,    scipy,     seaborn,    xarray `
-
-- Second environment `geotools-extended`
-  - `<geotools> + heat`
-
-### Are we missing any packages in either one of the environments?
 
 ---
 
